@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <img src="#">
+    <button id="genNewGif"> new gif</button>
+    <label> Search for Gif</label>
+    <input type="text" id="searchVal"/>
+    <button type="submit" id="subbtn"> Search </button>
+<script>
+    const img = document.querySelector('img');
+    
+    //gets a new gif from API
+    function getGif(topic){
+        var str = "https://api.giphy.com/v1/gifs/translate?api_key=tPjJvhbVnMeiiSbKA1brVuQB2ccAePp5&s="
+
+        fetch((str), {mode: 'cors'})
+        //after we fetch then the function will response
+        .then(function(response) {
+            console.log("running first then");
+            return response.json();
+        })
+        //after that runs THEN we run this reponse function 
+        .then(function(response) {
+            console.log("running second then");
+            console.log(response.data.images.original.url);
+            img.src = response.data.images.original.url;
+        });
+    }
+
+    const btn = document.getElementById("genNewGif");
+    btn.addEventListener('click',()=>{
+        console.log("testing new gif button");
+        getGif("trending");
+    })
+
+    const subbtn = document.getElementById("subbtn")
+    subbtn.addEventListener('click', ()=>{
+        console.log("submitting value");
+        console.log(document.getElementById("searchVal").value);
+        getGif(document.getElementById("searchVal").value);
+    })
+</script>
+</body>
+</html>
